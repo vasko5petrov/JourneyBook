@@ -1,0 +1,16 @@
+<div class="row">
+	{{#each journeys}}
+	<div class="col col-md-4">
+		<div class="card">
+		  <img class="card-img-top" src="uploads/{{this.imageUrl}}" alt="Card image cap">
+		  <div class="card-body">
+		    <h4 class="card-title">{{this.title}}</h4>
+		    <p class="card-text">{{this.location}}</p>
+		    <p class="card-text text-muted pull-right"><small>{{this.datetime}}</small></p>
+		    <p class="card-text text-muted">{{this.city}}</p>
+		    <a href="#" class="btn btn-primary">Review this journey</a>
+		  </div>
+		</div>
+	</div>
+	{{/each}}
+</div>

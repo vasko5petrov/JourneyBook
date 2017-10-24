@@ -1,0 +1,68 @@
+<div *ngIf="journey">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <h2 class="page-header">
+        Edit {{journey.title}}
+      </h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <form (submit)="onEditJourneySubmit()" (keydown.enter)="$event.preventDefault()" class="form-wrap">
+        <div class="form-group">
+  				<label for="title">Title</label>
+  				<input type="text" [(ngModel)]="journey.title" name="title" id="title" class="form-control">
+  			</div>
+        <div class="form-group">
+  		    <label for="location_input">Location</label>
+  		    <input [(ngModel)]="journey.location.address" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #editSearch name="location" class="form-control" (focus)="onFocusLocationInput()" id="location_input">
+  		  </div>
+        <div class="form-group">
+  				<label for="duration">Duration</label>
+  				<input type="text" [(ngModel)]="journey.duration.dateLabel" class="form-control" id="duration" required name="duration" daterangepicker [options]="options" (applyDaterangepicker)="selectedDate($event)" (cancelDaterangepicker)="selectedDate($event)" (hideDaterangepicker)="selectedDate($event)" />
+  				<!-- <input type="text" [(ngModel)]="duration" name="duration" id="duration" class="form-control"> -->
+  			</div>
+        <div class="form-group">
+          <label>Type</label>
+          <select type="text" name="type" [(ngModel)]="journey.type" class="form-control">
+  					<option value="none" selected>None</option>
+            <option value="Monuments">Monuments</option>
+            <option value="Mountain">Mountain</option>
+            <option value="Sea">Sea</option>
+            <option value="Spa">Spa</option>
+          </select>
+        </div>
+        <div class="form-group">
+  				<label>Rating</label>
+  	      <div class="star-rating">
+  	        <fieldset required>
+  	          <input type="radio" id="star5" name="rating" [(ngModel)]="journey.rating" value="5" /><label for="star5" title="Outstanding">5 stars</label>
+  	          <input type="radio" id="star4" name="rating" [(ngModel)]="journey.rating" value="4" /><label for="star4" title="Very Good">4 stars</label>
+  	          <input type="radio" id="star3" name="rating" [(ngModel)]="journey.rating" value="3" /><label for="star3" title="Good">3 stars</label>
+  	          <input type="radio" id="star2" name="rating" [(ngModel)]="journey.rating" value="2" /><label for="star2" title="Poor">2 stars</label>
+  	          <input type="radio" id="star1" name="rating" [(ngModel)]="journey.rating" value="1" /><label for="star1" title="Very Poor">1 star</label>
+  	        </fieldset>
+  	      </div>
+  			</div>
+        <div class="form-group">
+  			    <label for="imageFile">Image</label>
+  					<br>
+  					<input type="file" [(ngModel)]="imageFile" name="imageFile" id="imageFile" class="inputfile" (change)="onChangeImageFile($event)"/>
+  					<label for="imageFile" class="btn btn-warning"><i class="fa fa-image"></i> <strong>Choose image</strong></label>
+  			</div>
+  			<div [hidden]="!imgReader">
+            <div *ngIf="imgReader" class="img-wrapper">
+              <img class="img-responsive" src="{{imgReader}}">
+            </div>
+        </div>
+        <div [hidden]="!oldImage">
+            <div *ngIf="!imgReader" class="img-wrapper">
+              <img class="img-responsive" src="http://localhost:3000/uploads/{{oldImage}}">
+            </div>
+        </div>
+  			<hr>
+  			<input type="submit" value="Add" class="btn btn-primary btn-block">
+      </form>
+    </div>
+  </div>
+</div>

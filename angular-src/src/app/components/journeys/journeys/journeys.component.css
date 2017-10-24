@@ -1,0 +1,18 @@
+.panel-heading {
+	 height: 140px;
+	 background-repeat: no-repeat;
+	 background-size: cover;
+	 background-position: center;
+}
+.label.Mountain {
+	background-color: #4caf50;
+}
+.label.Monuments {
+	background-color: #e51c23;
+}
+.label.Sea {
+	background-color: #0c84e4;
+}
+.label.Spa {
+	background-color: orange;
+}

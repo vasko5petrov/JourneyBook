@@ -1,0 +1,55 @@
+<div *ngIf="journey">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+				<h2 class="page-header">{{journey.title}}</h2>
+				<blockquote>{{journey.location.place}}</blockquote>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 info">
+			<div class="panel panel-primary">
+	        <div class="panel-heading">
+	          <h3 class="panel-title">Info</h3>
+	        </div>
+	        <ul class="list-group panel-body">
+	          <li class="list-group-item"><strong><i class="fa fa-map-marker"></i></strong> {{journey.location.address}}</li>
+	          <li class="list-group-item"><strong>
+	            <i class="fa fa-calendar"></i></strong>
+	            {{journey.duration.dateLabel}} - ({{journey.duration.days}} <span *ngIf="journey.duration.days !== 1">days</span><span *ngIf="journey.duration.days === 1">day</span>)
+	          </li>
+	          <li class="list-group-item"><strong>Type:</strong> {{journey.type}}</li>
+	          <li class="list-group-item">
+	            <ul class="star-rating-list">
+	              <li *ngFor="let number of starArr(journey.rating)">
+	                <i class="fa fa-star"></i>
+	              </li>
+	              <li *ngFor="let ostars of starArr(maxRating - journey.rating)">
+	                <i class="fa fa-star-o"></i>
+	              </li>
+	            </ul>
+	          </li>
+						<li class="list-group-item">
+							<a [routerLink]="['/edit-journey/'+journey._id]" style="text-decoration: none;"><i class="fa fa-pencil"></i> Edit journey</a>
+						</li>
+	        </ul>
+	      </div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6 col-sm-6">
+			<div class="panel panel-default">
+			  <img src="http://localhost:3000/uploads/{{journey.imageUrl}}" class="img-responsive">
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-6">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title">Map</h3>
+				</div>
+				<agm-map [latitude]="journey.location.lat" [longitude]="journey.location.lng" class="panel-body" style="padding: 0;">
+				  <agm-marker [latitude]="journey.location.lat" [longitude]="journey.location.lng"></agm-marker>
+				</agm-map>
+			</div>
+		</div>
+	</div>
+</div>

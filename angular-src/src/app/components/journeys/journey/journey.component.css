@@ -1,0 +1,10 @@
+.info .star-rating-list {
+  font-size: 2em;
+}
+.panel-heading .panel-title .pull-right a span {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.panel-heading .panel-title .pull-right a:hover span {
+  opacity: 1;
+}

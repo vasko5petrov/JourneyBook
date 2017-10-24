@@ -1,0 +1,48 @@
+<div *ngIf="journeys">
+	<div class="row">
+		<div class="col-md-12 col-sm-12">
+				<h2 class="page-header">My Journeys</h2>
+		</div>
+	</div>
+	<div class="row">
+	  <div class="col-sm-6 col-md-4" *ngFor="let journey of journeys">
+	  	<div class="panel">
+			<a [routerLink]="[journey._id]">
+				<div class="panel-heading" [style.background-image]="'url(http://localhost:3000/uploads/' + journey.imageUrl + ')'">
+			    <!--<img src="{{journey.imageUrl}}"/>-->
+				</div>
+			</a>
+			<div class="panel-body custom-title">
+				<h3 class="panel-title">{{journey.title}}</h3>
+				<ul class="star-rating-list">
+						<li *ngFor="let number of starArr(journey.rating)">
+							<i class="fa fa-star"></i>
+						</li>
+						<li *ngFor="let ostars of starArr(maxRating - journey.rating)">
+							<i class="fa fa-star-o"></i>
+						</li>
+				</ul>
+			</div>
+			<div class="panel-body">
+				<p><span className="label label-default {{journey.type}}">{{journey.type}}</span></p>
+				<p>{{journey.location.city}}</p>
+	      <p>{{journey.duration.dateLabel}}</p>
+			</div>
+			<div class="panel-footer">
+				<a [routerLink]="[journey._id]" class="btn btn-primary btn-block" role="button">More info</a>
+			</div>
+		</div>
+	    <!-- <div class="thumbnail">
+	      <img src="http://localhost:3000/{{journey.imageUrl}}">
+	      <div class="caption">
+	        <h3>{{journey.title}}</h3>
+	        <p>{{journey.datetime}}</p>
+	        <p><a [routerLink]="[journey._id]" class="btn btn-default btn-block" role="button">Read more</a>
+	      </div>
+	    </div> -->
+	  </div>
+	</div>
+</div>
+<div *ngIf="journeys == 0">
+	<p>No journeys found.</p>
+</div>
