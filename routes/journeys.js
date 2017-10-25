@@ -91,8 +91,28 @@ router.get('/:id' , (req, res) => {
 		if(err) {
 			throw err;
 		}
-		res.json(journey);
+		if(journey == null) {
+			res.json({success: false, message: 'Journey not found!'});
+			return;
+		}
+		res.json({success: true, journey: journey});
 	});
+});
+
+// Delete Route
+router.delete('/delete/:id', (req, res) => {
+		Journey.getJourneyById(req.params.id, (err, journey) => {
+			if(err) {
+				res.json({success: false, message: `Journey not found!`});
+			}
+			let query = {_id:req.params.id};
+			Journey.remove(query, (err) => {
+				if(err) {
+					res.json({success: false, message: `There was a problem! Journey "${journey.title}" has not been deleted!`});
+				}
+				res.json({success: true, message: `Journey has been deleted!`});
+			});
+		});
 });
 
 module.exports = router;

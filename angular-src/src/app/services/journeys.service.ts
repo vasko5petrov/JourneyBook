@@ -54,4 +54,11 @@ export class JourneysService {
     return this.http.get('http://localhost:3000/journeys/'+id, {headers: headers})
       .map(res => res.json());
   }
+
+  deleteJourney(id) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.delete('http://localhost:3000/journeys/delete/'+id, {headers: headers})
+      .map(res => res.json());
+  }
 }

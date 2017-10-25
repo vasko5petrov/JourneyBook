@@ -88,8 +88,12 @@ export class EditJourneyComponent implements OnInit {
     });
 
   	this.journeysService.getJourney(this.journeyId).subscribe(journey => {
-  		this.journey = journey;
-      this.oldImage = journey.imageUrl;
+  		if(journey.success) {
+        this.journey = journey.journey;
+        this.oldImage = journey.journey.imageUrl;
+      } else {
+        this.router.navigate(['/journeys']);
+      }
   	},
   	err => {
   		console.log(err);

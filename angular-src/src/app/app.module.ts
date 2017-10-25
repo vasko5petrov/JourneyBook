@@ -11,10 +11,12 @@ import { JourneysComponent } from './components/journeys/journeys/journeys.compo
 import { AddJourneyComponent } from './components/journeys/add-journey/add-journey.component';
 import { EditJourneyComponent } from './components/journeys/edit-journey/edit-journey.component';
 import { JourneyComponent } from './components/journeys/journey/journey.component';
+import { ConfirmComponent } from './components/modal/confirm-modal.component';
 
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AgmCoreModule } from '@agm/core';
 import { Daterangepicker } from 'ng2-daterangepicker';
+import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 
 import { JourneysService } from './services/journeys.service';
 import { ValidateService } from './services/validate.service';
@@ -36,7 +38,8 @@ const appRoutes: Routes = [
     JourneysComponent,
     AddJourneyComponent,
     JourneyComponent,
-    EditJourneyComponent
+    EditJourneyComponent,
+		ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -48,11 +51,15 @@ const appRoutes: Routes = [
       apiKey: 'AIzaSyCmzwn1Ap8Y9_Zso9ee5iJ8OiHFXTKfR5c',
       libraries: ["places"]
     }),
-		Daterangepicker
+		Daterangepicker,
+		BootstrapModalModule
   ],
   providers: [
     JourneysService,
     ValidateService,
+  ],
+	entryComponents: [
+    ConfirmComponent
   ],
   bootstrap: [AppComponent]
 })
