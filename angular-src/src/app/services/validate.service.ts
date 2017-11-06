@@ -13,4 +13,11 @@ export class ValidateService {
   	}
   }
 
+  checkJourneyRequiredFields(data) {
+    if(data.title === '' || data.title === undefined || data.location === '' || data.location === undefined || data.duration.days === '' || data.duration.days === undefined) {
+      return false;
+    }
+    return true;
+  }
+
 }

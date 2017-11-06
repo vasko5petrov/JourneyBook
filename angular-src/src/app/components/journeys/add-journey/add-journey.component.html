@@ -12,7 +12,7 @@
 		  </div>
 			<div class="form-group">
 				<label for="duration">Duration</label>
-				<input type="text" [(ngModel)]="duration" class="form-control" id="duration" required name="duration" daterangepicker [options]="options" (applyDaterangepicker)="selectedDate($event)" (cancelDaterangepicker)="selectedDate($event)" (hideDaterangepicker)="selectedDate($event)" />
+				<input type="text" [(ngModel)]="dateLabel" class="form-control" id="duration" required name="duration" daterangepicker [options]="options" (applyDaterangepicker)="selectedDate($event)" (cancelDaterangepicker)="selectedDate($event)" (hideDaterangepicker)="selectedDate($event)" />
 				<!-- <input type="text" [(ngModel)]="duration" name="duration" id="duration" class="form-control"> -->
 			</div>
 			<div class="form-group">

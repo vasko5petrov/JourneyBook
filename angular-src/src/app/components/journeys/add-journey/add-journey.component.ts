@@ -19,21 +19,11 @@ export class AddJourneyComponent implements OnInit {
 
   public daterange: any = {};
   diffDays: any;
+  dateLabel: any;
   public options: any = {
       locale: { format: 'YYYY-MM-DD' },
       alwaysShowCalendars: false,
   };
-
-  public selectedDate(value: any) {
-    if(value == undefined) {
-      console.log("Erorr");
-    } else {
-      this.daterange.start = value.picker.startDate;
-      this.daterange.end = value.picker.endDate;
-      this.daterange.label = value.event.target.value;
-      this.diffDays = Math.round(Math.abs((this.daterange.start - this.daterange.end)/(24*60*60*1000)));
-    }
-  }
 
 	public latitude: number;
   public longitude: number;
@@ -116,6 +106,22 @@ export class AddJourneyComponent implements OnInit {
     }
   }
 
+  public selectedDate(value: any) {
+    if(value == undefined) {
+      console.log("Erorr");
+    } else {
+      this.daterange.start = value.picker.startDate;
+      this.daterange.end = value.picker.endDate;
+      this.daterange.label = value.event.target.value;
+      this.diffDays = Math.round(Math.abs((this.daterange.start - this.daterange.end)/(24*60*60*1000)));
+      this.dateLabel = this.daterange.start.format('YYYY-MM-DD') + ' - ' + this.daterange.end.format('YYYY-MM-DD');
+      this.duration = {
+        days: this.diffDays,
+        dateLabel: this.dateLabel
+      };
+    }
+  }
+
   onChangeImageFile(event) {
   	let image = event.srcElement.files[0];
   	this.image = image;
@@ -127,10 +133,6 @@ export class AddJourneyComponent implements OnInit {
   }
 
   onAddJourneySubmit() {
-    this.duration = {
-      days: this.diffDays,
-      dateLabel: this.daterange.start.format('YYYY-MM-DD') + ' - ' + this.daterange.end.format('YYYY-MM-DD')
-    };
     if(this.type == "" || this.type == undefined) {
       this.type = "None";
     }
