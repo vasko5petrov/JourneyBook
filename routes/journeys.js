@@ -42,7 +42,7 @@ router.post('/add', (req, res) => {
 
 		Journey.addJourney(newJourney, (err, journey) => {
 			if(err) {
-				res.json({success: false, message: err.message});
+				res.json({success: false, message: [{'message': err.message}]});
 			} else {
 				res.json({success: true, message: `Journey "${newJourney.title}" created!`});
 				// console.log('Journey added!');
@@ -66,20 +66,46 @@ router.post('/:id/edit', (req, res) => {
 	} else {
 		let query = {_id: req.params.id};
 
-		let journey = {};
+		let updatedJourney = {};
 
-		journey.title = req.body.title;
-		journey.location = req.body.location;
-		journey.duration = req.body.duration;
-		journey.type = req.body.type;
-		journey.rating = req.body.rating;
-		journey.imageUrl = req.body.imageUrl;
+		updatedJourney.title = req.body.title;
+		updatedJourney.location = req.body.location;
+		updatedJourney.duration = req.body.duration;
+		updatedJourney.type = req.body.type;
+		updatedJourney.rating = req.body.rating;
+		updatedJourney.imageUrl = req.body.imageUrl;
 
-		Journey.update(query, journey, (err) => {
+		Journey.getJourneyById(req.params.id, (err, journey) => {
 			if(err) {
-				res.json({success: false, message: err.message});
+				res.json({success: false, message: 'Journey not found!'});
+				return false;
+			}
+			if(journey == null) {
+				res.json({success: false, message: 'Journey not found!'});
+				return false;
+			}
+			if(journey.title === updatedJourney.title) {
+				Journey.update(query, updatedJourney, (err) => {
+					if(err) {
+						res.json({success: false, message: [{'message': err.message}]});
+					} else {
+						res.json({success: true, message: `Journey "${updatedJourney.title}" has been updated!`});
+					}
+				});
 			} else {
-				res.json({success: true, message: `Journey "${journey.title}" has been updated!`});
+				Journey.find({'title' : updatedJourney.title}, function (err, docs) {
+			    if (docs.length){
+			    	res.json({success: false, message: [{'message': 'Title already exists'}]});
+			    } else {
+						Journey.update(query, updatedJourney, (err) => {
+							if(err) {
+								res.json({success: false, message: [{'message': err.message}]});
+							} else {
+								res.json({success: true, message: `Journey "${updatedJourney.title}" has been updated!`});
+							}
+						});
+			    }
+			  });
 			}
 		});
 	}
@@ -89,11 +115,12 @@ router.post('/:id/edit', (req, res) => {
 router.get('/:id' , (req, res) => {
 	Journey.getJourneyById(req.params.id, (err, journey) => {
 		if(err) {
-			throw err;
+			res.json({success: false, message: 'Journey not found!'});
+			return false;
 		}
 		if(journey == null) {
 			res.json({success: false, message: 'Journey not found!'});
-			return;
+			return false;
 		}
 		res.json({success: true, journey: journey});
 	});

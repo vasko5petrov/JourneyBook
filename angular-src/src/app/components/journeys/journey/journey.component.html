@@ -19,6 +19,15 @@
 	          </li>
 	          <li class="list-group-item"><strong>Type:</strong> {{journey.type}}</li>
 	          <li class="list-group-item">
+							<div *ngIf="journey.rating === 'Not rated'">
+								<ul class="star-rating-list">
+		              <li><i class="fa fa-star-o"></i></li>
+			            <li><i class="fa fa-star-o"></i></li>
+				          <li><i class="fa fa-star-o"></i></li>
+					        <li><i class="fa fa-star-o"></i></li>
+						      <li><i class="fa fa-star-o"></i></li>
+		            </ul>
+							</div>
 	            <ul class="star-rating-list">
 	              <li *ngFor="let number of starArr(journey.rating)">
 	                <i class="fa fa-star"></i>

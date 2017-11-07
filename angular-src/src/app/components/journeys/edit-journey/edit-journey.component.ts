@@ -31,6 +31,8 @@ export class EditJourneyComponent implements OnInit {
       alwaysShowCalendars: false,
   };
 
+  mmessageTimeout: number = 3000;
+
   public selectedDate(value: any) {
     if(value == undefined) {
       console.log("Erorr");
@@ -42,6 +44,8 @@ export class EditJourneyComponent implements OnInit {
       this.dateLabel = this.daterange.start.format('YYYY-MM-DD') + ' - ' + this.daterange.end.format('YYYY-MM-DD');
       this.journey.duration.days = this.diffDays;
       this.journey.duration.dateLabel = this.dateLabel;
+      this.journey.duration.start =  Date.parse(this.daterange.start);
+      this.journey.duration.end =  Date.parse(this.daterange.start);
     }
   }
 
@@ -123,76 +127,79 @@ export class EditJourneyComponent implements OnInit {
             lat: this.latitude,
             lng: this.longitude
           };
-          this.journey.location = this.location_obj;
 
+          this.journey.location = this.location_obj;
         });
       });
     }).catch((err) => {
       console.log(err);
-    }) ;
+    });
   }
 
   onEditJourneySubmit() {
+
+    if(this.journey.location.address === '') {
+      this.journey.location.address = this.journey.location.place;
+    } else if(this.journey.location.address != '' && typeof(this.location_obj) === 'undefined') {
+      this.journey.location.address = this.journey.location.place;
+    }
+
+    const updatedJourney = {
+      id: this.journey._id,
+      title: this.journey.title,
+      location: this.journey.location,
+      duration: this.journey.duration,
+      type: this.journey.type,
+      rating: this.journey.rating,
+      imageUrl: this.journey.imageUrl,
+    }
+
     if(this.image) {
   		this.journeysService.uploadImage(this.image).subscribe(res => {
   			if(res.success) {
-  				const updatedJourney = {
-            id: this.journey._id,
-			  		title: this.journey.title,
-			  		location: this.journey.location,
-			  		duration: this.journey.duration,
-            type: this.journey.type,
-            rating: this.journey.rating,
-			  		imageUrl: res.file
-			  	}
+          updatedJourney.imageUrl = res.file;
+          if (typeof(this.journey.imageUrl) != 'undefined') {
+            if(this.journey.imageUrl != 'defaultImage.png') {
+              this.journeysService.deleteImage(this.journey.imageUrl).subscribe(data => {
+                if(data.success) {
+                  console.log(data.message);
+                } else {
+                  console.log(data.message);
+                }
+              });
+            }
+          }
 
-          this.journeysService.deleteImage(this.journey.imageUrl).subscribe(data => {
+          this.journeysService.editJourney(updatedJourney).subscribe(data => {
             if(data.success) {
-              console.log(data.message);
+              this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.mmessageTimeout});
+              this.router.navigate(['/journeys/' + this.journey._id]);
             } else {
-              console.log(data.message);
+              for(let i=0; i<data.message.length; i++) {
+                this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: this.mmessageTimeout});
+              }
+              return false;
             }
           });
-
-			    this.journeysService.editJourney(updatedJourney).subscribe(data => {
-			      if(data.success) {
-			      	this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: 5000});
-			        this.router.navigate(['/journeys/' + this.journey._id]);
-			      } else {
-			      	for(let i=0; i<data.message.length; i++) {
-				  			this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: 5000});
-				  		}
-			      }
-			    });
   			} else {
 			  	if(!this.validateService.validateImage(res)) {
-			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: 5000});
+			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: this.mmessageTimeout});
 			  		return false;
 			  	}
   			}
   		});
   	} else {
-	  	const updatedJourney = {
-        id: this.journey._id,
-	  		title: this.journey.title,
-	  		location: this.journey.location,
-	  		duration: this.journey.duration,
-        type: this.journey.type,
-        rating: this.journey.rating,
-        imageUrl: this.journey.imageUrl,
-	  	}
-
-	    this.journeysService.editJourney(updatedJourney).subscribe(data => {
-	      if(data.success) {
-			    this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: 5000});
-	        this.router.navigate(['/journeys/' + this.journey._id]);
-	      } else {
-	      	for(let i=0; i<data.message.length; i++) {
-		  			this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: 5000});
-		  		}
-		  		return false;
-	      }
-	    });
+      this.journeysService.editJourney(updatedJourney).subscribe(data => {
+        if(data.success) {
+          this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.mmessageTimeout});
+          this.router.navigate(['/journeys/' + this.journey._id]);
+        } else {
+          for(let i=0; i<data.message.length; i++) {
+            this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.mmessageTimeout});
+          }
+          return false;
+        }
+      });
     }
   }
 

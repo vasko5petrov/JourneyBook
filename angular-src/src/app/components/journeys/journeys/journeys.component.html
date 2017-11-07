@@ -14,6 +14,15 @@
 			</a>
 			<div class="panel-body custom-title">
 				<h3 class="panel-title">{{journey.title}}</h3>
+				<div *ngIf="journey.rating === 'Not rated'">
+					<ul class="star-rating-list">
+						<li><i class="fa fa-star-o"></i></li>
+						<li><i class="fa fa-star-o"></i></li>
+						<li><i class="fa fa-star-o"></i></li>
+						<li><i class="fa fa-star-o"></i></li>
+						<li><i class="fa fa-star-o"></i></li>
+					</ul>
+				</div>
 				<ul class="star-rating-list">
 						<li *ngFor="let number of starArr(journey.rating)">
 							<i class="fa fa-star"></i>

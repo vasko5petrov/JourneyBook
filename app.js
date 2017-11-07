@@ -50,7 +50,7 @@ app.use(bodyParser.json());
 
 // Express Validator Middleware
 app.use(expressValidator({
-	errorFormatter: (param, msg, value) => {
+	errorFormatter: (param, message, value) => {
 		let namespace = param.split('.'),
 		root = namespace.shift(),
 		formParam = root;
@@ -60,36 +60,24 @@ app.use(expressValidator({
 		}
 		return {
 			param: formParam,
-			msg: msg,
+			message: message,
 			value: value
 		};
 	},
 	customValidators: {
-      isEmailAvailable(email) {
-        return new Promise((resolve, reject) => {
-          User.findOne({ email: email }, (err, user) => {
-            if (err) throw err;
-            if(user == null) {
-              resolve();
-            } else {
-              reject();
-            }
-          });
-        });
-      },
-      isUsernameAvailable(username) {
-        return new Promise((resolve, reject) => {
-          User.findOne({ username: username }, (err, user) => {
-            if (err) throw err;
-            if(user == null) {
-              resolve();
-            } else {
-              reject();
-            }
-          });
-        });
-      }
-    }
+      // isTitleAvailable(title) {
+      //   return new Promise((resolve, reject) => {
+      //     Journey.findOne({ title: title }, (err, journey) => {
+      //       if (err) throw err;
+      //       if(journey == null) {
+      //         resolve();
+      //       } else {
+      //         reject();
+      //       }
+      //     });
+      //   });
+      // }
+  }
 }));
 
 // Route files

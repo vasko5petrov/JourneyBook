@@ -31,14 +31,15 @@ let journeySchema = mongoose.Schema({
 let Journey = module.exports = mongoose.model('Journey', journeySchema);
 
 module.exports.addJourney = (newJourney, callback) => {
-	Journey.find({title : newJourney.title}, function (err, docs) {
-        if (docs.length){
-        	callback({msg:'Title already exists'}, null);
-        } else{
+	Journey.find({'title' : newJourney.title}, function (err, docs) {
+    if (docs.length){
+    	callback({message:'Title already exists'}, null);
+    } else {
 			newJourney.save(callback);
-        }
-    });
+    }
+  });
 }
+
 module.exports.getJourneyById = (id, callback) => {
 	Journey.findById(id, callback);
 }

@@ -41,6 +41,8 @@ export class AddJourneyComponent implements OnInit {
 	image: any;
   imgReader: string;
 
+  messageTimeout: number = 3000;
+
   constructor(
   	private router: Router,
   	private journeysService: JourneysService,
@@ -117,7 +119,9 @@ export class AddJourneyComponent implements OnInit {
       this.dateLabel = this.daterange.start.format('YYYY-MM-DD') + ' - ' + this.daterange.end.format('YYYY-MM-DD');
       this.duration = {
         days: this.diffDays,
-        dateLabel: this.dateLabel
+        dateLabel: this.dateLabel,
+        start: Date.parse(this.daterange.start),
+        end: Date.parse(this.daterange.end)
       };
     }
   }
@@ -139,55 +143,50 @@ export class AddJourneyComponent implements OnInit {
     if(this.rating == "" || this.rating == undefined) {
       this.rating = "Not rated";
     }
+
+    const journey = {
+      title: this.title,
+      location: this.location_obj,
+      duration: this.duration,
+      type: this.type,
+      rating: this.rating
+    }
+
   	if(this.image) {
   		this.journeysService.uploadImage(this.image).subscribe(res => {
   			if(res.success) {
-  				const journey = {
-			  		title: this.title,
-			  		location: this.location_obj,
-			  		duration: this.duration,
-            type: this.type,
-            rating: this.rating,
-			  		imageUrl: res.file
-			  	}
+  				journey['imageUrl'] = res.file;
 
 			    this.journeysService.addJourney(journey).subscribe(data => {
 			      if(data.success) {
-			      	this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: 5000});
+			      	this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
 			        this.router.navigate(['/journeys']);
 			      } else {
 			      	for(let i=0; i<data.message.length; i++) {
-				  			this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: 5000});
+				  			this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
 				  		}
 			      }
 			    });
   			} else {
 			  	if(!this.validateService.validateImage(res)) {
-			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: 5000});
+			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
 			  		return false;
 			  	}
   			}
   		});
   	} else {
-	  	const journey = {
-	  		title: this.title,
-	  		location: this.location_obj,
-	  		duration: this.duration,
-        type: this.type,
-        rating: this.rating
-	  	}
+	  	journey['imageUrl'] = 'defaultImage.png';
 
-	    this.journeysService.addJourney(journey).subscribe(data => {
-	      if(data.success) {
-			    this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: 5000});
-	        this.router.navigate(['/journeys']);
-	      } else {
-	      	for(let i=0; i<data.message.length; i++) {
-		  			this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: 5000});
-		  		}
-		  		return false;
-	      }
-	    });
+      this.journeysService.addJourney(journey).subscribe(data => {
+        if(data.success) {
+          this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
+          this.router.navigate(['/journeys']);
+        } else {
+          for(let i=0; i<data.message.length; i++) {
+            this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
+          }
+        }
+      });
     }
   }
 

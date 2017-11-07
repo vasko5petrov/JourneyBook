@@ -20,6 +20,8 @@ export class JourneyComponent implements OnInit {
 
   maxRating: any;
 
+  messageTimeout:number = 3000;
+
   constructor(
   	private router: Router,
   	private activatedRoute: ActivatedRoute,
@@ -86,16 +88,22 @@ export class JourneyComponent implements OnInit {
         if(isConfirmed) {
           this.journeysService.deleteJourney(this.journeyId).subscribe(res => {
             if(res.success) {
-              this.journeysService.deleteImage(this.journey.imageUrl).subscribe(res => {
-                if(res.success) {
-                  this.flashMessage.show(res.message, {cssClass: 'alert-success', timeout: 5000});
-                  this.router.navigate(['/journeys']);
-                } else {
-                  this.flashMessage.show(res.message, {cssClass: 'alert-danger', timeout: 5000});
+              if(typeof(this.journey.imageUrl) != 'undefined') {
+                if(this.journey.imageUrl != 'defaultImage.png') {
+                  this.journeysService.deleteImage(this.journey.imageUrl).subscribe(res => {
+                    if(res.success) {
+                      this.flashMessage.show(res.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
+                      this.router.navigate(['/journeys']);
+                    } else {
+                      this.flashMessage.show(res.message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
+                    }
+                  });
                 }
-              });
+              }
+              this.flashMessage.show(res.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
+              this.router.navigate(['/journeys']);
             } else {
-              this.flashMessage.show(res.message, {cssClass: 'alert-danger', timeout: 5000});
+              this.flashMessage.show(res.message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
             }
           });
         } else {
