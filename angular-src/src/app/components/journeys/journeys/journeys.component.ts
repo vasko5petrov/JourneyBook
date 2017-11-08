@@ -13,6 +13,13 @@ export class JourneysComponent implements OnInit {
   search: any;
   typePercent: any;
 
+  sort: any;
+  order = "date";
+  option = true;
+  nCnt: number = 0;
+
+  itemsPerPage: any = 8;
+
   constructor(
   	private journeysService: JourneysService
   	) { }
@@ -62,6 +69,16 @@ export class JourneysComponent implements OnInit {
   		console.log(err);
   		return false;
   	});
+  }
+
+  sortBy(name){
+    this.order = name;
+    this.nCnt = this.nCnt + 1;
+    if(this.nCnt%2) {
+      this.option = true;
+    } else {
+      this.option = false;
+    }
   }
 
   searchJourney(){

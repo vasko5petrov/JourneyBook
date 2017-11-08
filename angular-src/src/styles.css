@@ -59,3 +59,37 @@ agm-map {
   display: inline-block;
   list-style: none;
 }
+
+
+.my-pagination .ngx-pagination {
+    display: inline-block;
+    padding: 0px;
+    margin: 23px 0;
+    border-radius: 3px
+}
+.my-pagination .ngx-pagination li a, .my-pagination .ngx-pagination li.current, .my-pagination .ngx-pagination > .disabled {
+  position: relative;
+  display: inline-block;
+    padding: 6px 16px;
+    line-height: 1.846;
+    text-decoration: none;
+    color: #666;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    margin-left: -1px;
+    cursor: pointer;
+}
+.my-pagination .ngx-pagination > .disabled {
+    color: #bbbbbb;
+    background-color: #ffffff;
+    border-color: #dddddd;
+    cursor: not-allowed;
+}
+.my-pagination .ngx-pagination li.current {
+  background-color: #ff851b;
+  border-color: #ff7701;
+  color: white;
+}
+.my-pagination .ngx-pagination li.pagination-previous a {
+
+}

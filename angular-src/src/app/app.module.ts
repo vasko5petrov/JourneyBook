@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Pipe, PipeTransform } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -19,9 +19,12 @@ import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AgmCoreModule } from '@agm/core';
 import { Daterangepicker } from 'ng2-daterangepicker';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { JourneysService } from './services/journeys.service';
 import { ValidateService } from './services/validate.service';
+import { LoaderComponent } from './components/loader/loader.component';
 
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
@@ -33,6 +36,50 @@ const appRoutes: Routes = [
 	{path: '*', redirectTo: ''}
 ];
 
+@Pipe({
+	name: 'orderBy'
+})
+
+export class OrderBy{
+
+ transform(array, orderBy, asc = true){
+
+     if (!orderBy || orderBy.trim() == ""){
+       return array;
+     }
+
+     //ascending
+     if (asc){
+       return Array.from(array).sort((item1: any, item2: any) => {
+         return this.orderByComparator(item1[orderBy], item2[orderBy]);
+       });
+     }
+     else{
+       //not asc
+       return Array.from(array).sort((item1: any, item2: any) => {
+         return this.orderByComparator(item2[orderBy], item1[orderBy]);
+       });
+     }
+
+ }
+
+ orderByComparator(a:any, b:any):number{
+
+     if((isNaN(parseFloat(a)) || !isFinite(a)) || (isNaN(parseFloat(b)) || !isFinite(b))){
+       //Isn't a number so lowercase the string to properly compare
+       if(a.toLowerCase() < b.toLowerCase()) return -1;
+       if(a.toLowerCase() > b.toLowerCase()) return 1;
+     }
+     else{
+       //Parse strings as numbers to compare properly
+       if(parseFloat(a) < parseFloat(b)) return -1;
+       if(parseFloat(a) > parseFloat(b)) return 1;
+      }
+
+     return 0; //equal each other
+ }
+}
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +90,8 @@ const appRoutes: Routes = [
     JourneyComponent,
     EditJourneyComponent,
 		ConfirmComponent,
-		JourneysMapComponent
+		JourneysMapComponent,
+		LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -56,7 +104,9 @@ const appRoutes: Routes = [
       libraries: ["places"]
     }),
 		Daterangepicker,
-		BootstrapModalModule
+		BootstrapModalModule,
+		Ng2OrderModule,
+		NgxPaginationModule
   ],
   providers: [
     JourneysService,

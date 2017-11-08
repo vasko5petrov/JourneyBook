@@ -15,7 +15,6 @@ router.get('/' , (req, res) => {
 
 // Search Journeys Route
 router.get('/search/:search' , (req, res) => {
-	console.log(typeof(req.params.search));
 		Journey.find({"title": {"$regex": req.params.search, "$options": "$i"} }, (err, journeys) => {
 			if(!journeys) {
 				res.json({success: false});
