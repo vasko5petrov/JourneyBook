@@ -11,6 +11,8 @@ import { JourneysComponent } from './components/journeys/journeys/journeys.compo
 import { AddJourneyComponent } from './components/journeys/add-journey/add-journey.component';
 import { EditJourneyComponent } from './components/journeys/edit-journey/edit-journey.component';
 import { JourneyComponent } from './components/journeys/journey/journey.component';
+import { JourneysMapComponent } from './components/journeys-map/journeys-map.component';
+
 import { ConfirmComponent } from './components/modal/confirm-modal.component';
 
 import { FlashMessagesModule } from 'angular2-flash-messages';
@@ -24,6 +26,7 @@ import { ValidateService } from './services/validate.service';
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
 	{path: 'journeys', component: JourneysComponent},
+  {path: 'journeys/map', component: JourneysMapComponent},
 	{path: 'add-journey', component: AddJourneyComponent},
 	{path: 'edit-journey/:id', component: EditJourneyComponent},
   {path: 'journeys/:id', component: JourneyComponent},
@@ -39,7 +42,8 @@ const appRoutes: Routes = [
     AddJourneyComponent,
     JourneyComponent,
     EditJourneyComponent,
-		ConfirmComponent
+		ConfirmComponent,
+		JourneysMapComponent
   ],
   imports: [
     BrowserModule,

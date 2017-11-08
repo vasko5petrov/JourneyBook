@@ -5,6 +5,24 @@
 		</div>
 	</div>
 	<div class="row">
+		<div class="col-md-12 col-sm-12">
+			<div class="form-group">
+				<input type="text" class="form-control" autocomplete="off" placeholder="Search journeys..." [(ngModel)]="search" name="search" (keyup)="searchJourney()">
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-offset-2">
+			<div class="progress" style="height: 10px; box-shadow: none;border: none;">
+				<div class="progress-bar progress-bar-success" title="Mountain journeys" [style.width]="typePercent.mountain"></div>
+				<div class="progress-bar progress-bar-danger" title="Monuments journeys" [style.width]="typePercent.monuments"></div>
+				<div class="progress-bar progress-bar-primary" title="Sea journeys" [style.width]="typePercent.sea"></div>
+				<div class="progress-bar progress-bar-warning" title="Spa journeys" [style.width]="typePercent.spa"></div>
+				<div class="progress-bar progress-bar-info" title="No type journeys" [style.width]="typePercent.none"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
 	  <div class="col-sm-6 col-md-4" *ngFor="let journey of journeys">
 	  	<div class="panel">
 			<a [routerLink]="[journey._id]">

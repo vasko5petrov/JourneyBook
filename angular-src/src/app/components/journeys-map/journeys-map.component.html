@@ -1,0 +1,21 @@
+<div *ngIf="journeys">
+  <h2 class="page-header">Journeys Map</h2>
+  <div class="panel panel-primary">
+      <agm-map [latitude]="latitude" [longitude]="longitude" class="panel-body" [scrollwheel]="true" [zoom]="zoom" style="padding: 0;">
+        <agm-marker *ngFor="let m of journeys; let i = index"
+        [latitude]="m.location.lat"
+        [longitude]="m.location.lng"
+        [markerDraggable]="false"
+        (markerClick)="clickedMarker(infoWindow)"
+        [iconUrl]="setMarkerIcon(m)">
+          <agm-info-window class="infoWindow" #infoWindow>
+            <div class="m-thumbnail">
+              <img src="http://localhost:3000/uploads/{{m.imageUrl}}" class="img-responsive" width="200px;">
+            </div>
+            <a [routerLink]="['/journeys/'+m._id]"><strong>{{m.title}}</strong></a><br>
+            <p>{{m.location.place}}</p>
+          </agm-info-window>
+        </agm-marker>
+      </agm-map>
+  </div>
+</div>

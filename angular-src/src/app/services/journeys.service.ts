@@ -13,6 +13,13 @@ export class JourneysService {
     return this.http.get('http://localhost:3000/journeys', {headers: headers})
       .map(res => res.json());
   }
+  
+  getJourneysByQuery(query) {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.get('http://localhost:3000/journeys/search/' + query, {headers: headers})
+      .map(res => res.json());
+  }
 
   addJourney(journey) {
     let headers = new Headers();
