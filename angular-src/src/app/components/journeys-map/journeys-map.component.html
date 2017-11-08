@@ -1,6 +1,6 @@
 <div *ngIf="journeys">
   <h2 class="page-header">Journeys Map</h2>
-  <div class="panel panel-primary">
+  <div class="panel panel-primary" *ngIf="journeys.length != 0">
       <agm-map [latitude]="latitude" [longitude]="longitude" class="panel-body" [scrollwheel]="true" [zoom]="zoom" style="padding: 0;">
         <agm-marker *ngFor="let m of journeys; let i = index"
         [latitude]="m.location.lat"

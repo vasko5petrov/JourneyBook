@@ -15,5 +15,8 @@
 	background-color: #0c84e4;
 }
 .label.Spa {
-	background-color: orange;
+	background-color: #ff851b;
+}
+.progress-bar-none {
+	background-color: #999999;
 }
