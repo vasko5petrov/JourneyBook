@@ -82,11 +82,11 @@ app.use(expressValidator({
 
 // Route files
 let images = require('./routes/images');
-app.use('/images', images);
+app.use('/api/images', images);
 let index = require('./routes/index');
-app.use('/', index);
+app.use('/api', index);
 let journeys = require('./routes/journeys');
-app.use('/journeys', journeys);
+app.use('/api/journeys', journeys);
 
 const PORT = process.env.PORT || 3000;
 
