@@ -14,17 +14,20 @@ export class NavbarComponent implements OnInit {
   	private router: Router,
   	private flashMessage: FlashMessagesService,
   	private authService: AuthService
-  	) { }
+  	) {
+      const token = localStorage.getItem('id_token');
+      if(token) {
+        this.authService.getProfile().subscribe(profile => {
+          this.user = profile.user;
+        },
+      	err => {
+      		console.log(err);
+      		return false;
+      	});
+      }
+    }
 
-  ngOnInit() {
-    this.authService.getProfile().subscribe(profile => {
-      this.user = profile.user;
-    },
-  	err => {
-  		console.log(err);
-  		return false;
-  	});
-  }
+  ngOnInit() { }
 
   onLogoutClick() {
   	this.authService.logout();

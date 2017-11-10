@@ -18,7 +18,7 @@
             <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/users/register']">Sign up</a></li>
             <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/users/login']">Sign in</a></li>
             <li *ngIf="authService.loggedIn()" class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{user.name}}
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span *ngIf="user">{{user.name}}</span><span *ngIf="!user">Profile</span>
               <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}"><a [routerLink]="['/add-journey']">Add Journey</a></li>
