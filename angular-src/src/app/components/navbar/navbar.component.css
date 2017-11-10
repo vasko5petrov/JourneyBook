@@ -1,0 +1,6 @@
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: #000000;
+    text-decoration: none;
+    outline: 0;
+    background-color: transparent;
+}

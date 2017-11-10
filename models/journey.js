@@ -25,6 +25,10 @@ let journeySchema = mongoose.Schema({
 	imageUrl: {
 		type: String,
 		required: false
+	},
+	author: {
+		type: String,
+		required: true
 	}
 });
 

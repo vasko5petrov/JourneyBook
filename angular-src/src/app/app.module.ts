@@ -14,6 +14,10 @@ import { JourneyComponent } from './components/journeys/journey/journey.componen
 import { JourneysMapComponent } from './components/journeys-map/journeys-map.component';
 
 import { ConfirmComponent } from './components/modal/confirm-modal.component';
+import { LoaderComponent } from './components/loader/loader.component';
+
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AgmCoreModule } from '@agm/core';
@@ -24,15 +28,19 @@ import {NgxPaginationModule} from 'ngx-pagination';
 
 import { JourneysService } from './services/journeys.service';
 import { ValidateService } from './services/validate.service';
-import { LoaderComponent } from './components/loader/loader.component';
+import { AuthService } from './services/auth.service';
+
+import { AuthGuard } from './guards/auth.guard';
 
 const appRoutes: Routes = [
 	{path: '', component: HomeComponent},
-	{path: 'journeys', component: JourneysComponent},
-  {path: 'journeys/map', component: JourneysMapComponent},
-	{path: 'add-journey', component: AddJourneyComponent},
-	{path: 'edit-journey/:id', component: EditJourneyComponent},
-  {path: 'journeys/:id', component: JourneyComponent},
+	{path: 'journeys', component: JourneysComponent, canActivate: [AuthGuard]},
+  {path: 'journeys/map', component: JourneysMapComponent, canActivate: [AuthGuard]},
+	{path: 'add-journey', component: AddJourneyComponent, canActivate: [AuthGuard]},
+	{path: 'edit-journey/:id', component: EditJourneyComponent, canActivate: [AuthGuard]},
+  {path: 'journeys/:id', component: JourneyComponent, canActivate: [AuthGuard]},
+	{path: 'users/register', component: RegisterComponent, canActivate: [AuthGuard]},
+	{path: 'users/login', component: LoginComponent, canActivate: [AuthGuard]},
 	{path: '*', redirectTo: ''}
 ];
 
@@ -91,7 +99,9 @@ export class OrderBy{
     EditJourneyComponent,
 		ConfirmComponent,
 		JourneysMapComponent,
-		LoaderComponent
+		LoaderComponent,
+		RegisterComponent,
+		LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -111,6 +121,8 @@ export class OrderBy{
   providers: [
     JourneysService,
     ValidateService,
+		AuthService,
+		AuthGuard
   ],
 	entryComponents: [
     ConfirmComponent

@@ -2,11 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 mongoose.Promise = Promise;
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const expressValidator = require('express-validator');
 const expressHbs = require('express-handlebars');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const passport = require('passport');
 
 const app = express();
 
@@ -26,6 +28,8 @@ db.on('error', (err) => {
 	console.log(err);
 });
 
+app.use(cors());
+
 app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header("Access-Control-Allow-Headers", "imageFile, Origin, X-Requested-With, Content-Type, Accept, Z-Key");
@@ -39,6 +43,7 @@ app.set('view engine', '.hbs');
 
 // Bring in Models
 let Journey = require('./models/journey');
+let User = require('./models/user');
 
 // Set Public Folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -47,6 +52,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
 // Parse application/json
 app.use(bodyParser.json());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 // Express Validator Middleware
 app.use(expressValidator({
@@ -81,12 +91,14 @@ app.use(expressValidator({
 }));
 
 // Route files
-let images = require('./routes/images');
-app.use('/api/images', images);
 let index = require('./routes/index');
 app.use('/api', index);
+let images = require('./routes/images');
+app.use('/api/images', images);
 let journeys = require('./routes/journeys');
 app.use('/api/journeys', journeys);
+let users = require('./routes/users');
+app.use('/api/users', users);
 
 const PORT = process.env.PORT || 3000;
 

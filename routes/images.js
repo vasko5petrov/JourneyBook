@@ -1,4 +1,5 @@
 const express = require('express');
+const passport = require('passport');
 const multer = require('multer');
 const fs = require('fs');
 const router = express.Router();
@@ -38,7 +39,7 @@ function checkFileType(file, cb) {
   }
 }
 
-router.post('/upload', function (req, res) {
+router.post('/upload', passport.authenticate('jwt', {session:false}), function (req, res) {
     upload(req, res, (err) => {
       if(err) {
         res.json({
@@ -62,7 +63,7 @@ router.post('/upload', function (req, res) {
     });
 })
 
-router.delete('/delete/:path', function(req, res) {
+router.delete('/delete/:path', passport.authenticate('jwt', {session:false}), function(req, res) {
   fs.unlink('./public/uploads/' + req.params.path, function(err) {
     if(err) {
       res.json({
