@@ -49,6 +49,7 @@
   					<br>
   					<input type="file" [(ngModel)]="imageFile" name="imageFile" id="imageFile" class="inputfile" (change)="onChangeImageFile($event)"/>
   					<label for="imageFile" class="btn btn-warning"><i class="fa fa-image"></i> <strong>Choose image</strong></label>
+  					<button *ngIf="!imgReader && oldImage && oldImage != 'defaultImage.png'" type="button" class="btn btn-danger" (click)="removeCurrentImage()">Remove image</button>
   			</div>
   			<div [hidden]="!imgReader">
             <div *ngIf="imgReader" class="img-wrapper">
@@ -61,7 +62,7 @@
             </div>
         </div>
   			<hr>
-  			<input type="submit" value="Add" class="btn btn-primary btn-block">
+  			<input type="submit" value="Save" class="btn btn-primary btn-block">
       </form>
     </div>
   </div>

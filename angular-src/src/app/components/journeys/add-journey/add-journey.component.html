@@ -42,6 +42,7 @@
 					<br>
 					<input type="file" [(ngModel)]="imageFile" name="imageFile" id="imageFile" class="inputfile" (change)="onChangeImageFile($event)"/>
 					<label for="imageFile" class="btn btn-warning"><i class="fa fa-image"></i> <strong>Choose image</strong></label>
+					<button *ngIf="imgReader" type="button" class="btn btn-danger" (click)="removeImageFile()">Remove image</button>
 			</div>
 			<div [hidden]="!imgReader">
           <div *ngIf="imgReader" class="img-wrapper">

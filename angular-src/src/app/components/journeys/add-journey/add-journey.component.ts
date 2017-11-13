@@ -76,6 +76,9 @@ export class AddJourneyComponent implements OnInit {
         this.ngZone.run(() => {
           //get the place result
           let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+          // for(let i = 0; i < place.photos.length; i++) {
+          //   console.log(place.photos[i].getUrl({'maxWidth': 1600, 'maxHeight': 1200}));
+          // }
 
           //verify result
           if (place.geometry === undefined || place.geometry === null) {
@@ -126,6 +129,11 @@ export class AddJourneyComponent implements OnInit {
     }
   }
 
+  removeImageFile() {
+    this.image = null;
+    this.imgReader = null;
+  }
+
   onChangeImageFile(event) {
   	let image = event.srcElement.files[0];
   	this.image = image;
@@ -133,7 +141,14 @@ export class AddJourneyComponent implements OnInit {
     reader.onload = () => {
       this.imgReader = reader.result;
     }
-    reader.readAsDataURL(this.image);
+
+    if(this.image && this.image.type == 'image/jpeg') {
+      reader.readAsDataURL(this.image);
+    } else {
+      this.flashMessage.show('This file will not be uploaded! Please select an image file!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
+      this.image = null;
+      this.imgReader = null;
+    }
   }
 
   onAddJourneySubmit() {

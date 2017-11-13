@@ -31,7 +31,7 @@ export class EditJourneyComponent implements OnInit {
       alwaysShowCalendars: false,
   };
 
-  mmessageTimeout: number = 3000;
+  messageTimeout: number = 3000;
 
   public selectedDate(value: any) {
     if(value == undefined) {
@@ -79,7 +79,19 @@ export class EditJourneyComponent implements OnInit {
     reader.onload = () => {
       this.imgReader = reader.result;
     }
-    reader.readAsDataURL(this.image);
+    if(event.srcElement.files[0] && event.srcElement.files[0].type == 'image/jpeg') {
+      reader.readAsDataURL(this.image);
+    } else {
+      this.flashMessage.show('This file will not be uploaded! Please select an image file!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
+      this.image = null;
+      this.imgReader = null;
+      return false;
+    }
+  }
+
+  removeCurrentImage() {
+    this.oldImage = 'defaultImage.png';
+    this.image = 'defaultImage.png';
   }
 
   ngOnInit() {
@@ -155,6 +167,27 @@ export class EditJourneyComponent implements OnInit {
     }
 
     if(this.image) {
+      if(this.image === 'defaultImage.png') {
+        this.journeysService.deleteImage(this.journey.imageUrl).subscribe(data => {
+          if(data.success) {
+            // console.log(data.message);
+          } else {
+            // console.log(data.message);
+          }
+        });
+        updatedJourney.imageUrl = 'defaultImage.png';
+        this.journeysService.editJourney(updatedJourney).subscribe(data => {
+          if(data.success) {
+            this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
+            this.router.navigate(['/journeys/' + this.journey._id]);
+          } else {
+            for(let i=0; i<data.message.length; i++) {
+              this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: this.messageTimeout});
+            }
+            return false;
+          }
+        });
+      }
   		this.journeysService.uploadImage(this.image).subscribe(res => {
   			if(res.success) {
           updatedJourney.imageUrl = res.file;
@@ -162,9 +195,9 @@ export class EditJourneyComponent implements OnInit {
             if(this.journey.imageUrl != 'defaultImage.png') {
               this.journeysService.deleteImage(this.journey.imageUrl).subscribe(data => {
                 if(data.success) {
-                  console.log(data.message);
+                  // console.log(data.message);
                 } else {
-                  console.log(data.message);
+                  // console.log(data.message);
                 }
               });
             }
@@ -172,18 +205,18 @@ export class EditJourneyComponent implements OnInit {
 
           this.journeysService.editJourney(updatedJourney).subscribe(data => {
             if(data.success) {
-              this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.mmessageTimeout});
+              this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
               this.router.navigate(['/journeys/' + this.journey._id]);
             } else {
               for(let i=0; i<data.message.length; i++) {
-                this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: this.mmessageTimeout});
+                this.flashMessage.show(data.message[i].msg, {cssClass: 'alert-danger', timeout: this.messageTimeout});
               }
               return false;
             }
           });
   			} else {
 			  	if(!this.validateService.validateImage(res)) {
-			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: this.mmessageTimeout});
+			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
 			  		return false;
 			  	}
   			}
@@ -191,11 +224,11 @@ export class EditJourneyComponent implements OnInit {
   	} else {
       this.journeysService.editJourney(updatedJourney).subscribe(data => {
         if(data.success) {
-          this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.mmessageTimeout});
+          this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
           this.router.navigate(['/journeys/' + this.journey._id]);
         } else {
           for(let i=0; i<data.message.length; i++) {
-            this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.mmessageTimeout});
+            this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
           }
           return false;
         }
