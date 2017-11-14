@@ -58,7 +58,8 @@
         </div>
         <div [hidden]="!oldImage">
             <div *ngIf="!imgReader" class="img-wrapper">
-              <img class="img-responsive" src="http://localhost:3000/uploads/{{oldImage}}">
+      				<img *ngIf="journey.imageUrl === 'defaultImage.png'" src="http://localhost:3000/uploads/{{journey.imageUrl}}" class="img-responsive">
+              <img *ngIf="journey.imageUrl != 'defaultImage.png'" class="img-responsive" src="http://localhost:3000/api/images/{{oldImage}}">
             </div>
         </div>
   			<hr>

@@ -34,6 +34,7 @@ app.use(function(req, res, next) {
     res.header('Access-Control-Allow-Origin', req.headers.origin);
     res.header("Access-Control-Allow-Headers", "imageFile, Origin, X-Requested-With, Content-Type, Accept, Z-Key");
 		res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+		res.header("Access-Control-Allow-Credentials", true);
     next();
 });
 
@@ -49,8 +50,9 @@ let User = require('./models/user');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Body Parser Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true, limit:'50mb' }));
 // Parse application/json
+app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.json());
 
 app.use(passport.initialize());

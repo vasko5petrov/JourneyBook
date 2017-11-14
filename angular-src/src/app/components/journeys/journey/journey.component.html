@@ -48,7 +48,8 @@
 	<div class="row">
 		<div class="col-md-6 col-sm-6">
 			<div class="panel panel-default">
-			  <img src="http://localhost:3000/uploads/{{journey.imageUrl}}" class="img-responsive">
+				<img *ngIf="journey.imageUrl === 'defaultImage.png'" src="http://localhost:3000/uploads/{{journey.imageUrl}}" class="img-responsive">
+			  <img *ngIf="journey.imageUrl != 'defaultImage.png'" src="http://localhost:3000/api/images/{{journey.imageUrl}}" class="img-responsive">
 			</div>
 		</div>
 		<div class="col-md-6 col-sm-6">
