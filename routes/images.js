@@ -5,6 +5,35 @@ const fs = require('fs');
 const router = express.Router();
 const path = require('path');
 
+// const GoogleImages = require('google-images');
+//
+// const client = new GoogleImages('002557618436623976352:2kzztbgx-ay', 'AIzaSyDrbJivZi_awI8CG3Hf772cl2UByqDHhas');
+//
+// client.search('The Aifel Tower')
+//     .then(images => {
+//         /*
+//         [{
+//             "url": "http://steveangello.com/boss.jpg",
+//             "type": "image/jpeg",
+//             "width": 1024,
+//             "height": 768,
+//             "size": 102451,
+//             "thumbnail": {
+//                 "url": "http://steveangello.com/thumbnail.jpg",
+//                 "width": 512,
+//                 "height": 512
+//             }
+//         }]
+//          */
+//          console.log(images[0]);
+//     });
+// //
+// // // paginate results
+// // client.search('Steve Angello', {page: 2});
+// //
+// // // search for certain size
+// // client.search('Steve Angello', {size: 'large'});
+
 const Journey = require('../models/journey');
 
 // Set Storage Engine
