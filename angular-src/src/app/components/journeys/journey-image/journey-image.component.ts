@@ -69,12 +69,14 @@ export class JourneyImageComponent implements OnInit {
               }, (placeResult, status) => {
                   let photos = placeResult.photos;
 
-                  photos.forEach((photo) => {
-                    this.photosUrls.push(photo.getUrl({
-                      maxWidth: 1200,
-                      maxHeight: undefined
-                    }));
-                  });
+                  if(photos) {
+                    photos.forEach((photo) => {
+                      this.photosUrls.push(photo.getUrl({
+                        maxWidth: 1200,
+                        maxHeight: undefined
+                      }));
+                    });
+                  }
               });
             }
           });
@@ -114,9 +116,12 @@ export class JourneyImageComponent implements OnInit {
   }
 
   imageFromLocation() {
-
+    this.image = null;
     let randomPhoto = this.photosUrls[Math.floor(Math.random() * this.photosUrls.length)];
     this.imgReader = randomPhoto;
+    if(this.photosUrls.length == 0) {
+      this.flashMessage.show('Sorry! There are no images found for this location.', {cssClass: 'alert-danger', timeout: this.messageTimeout});
+    }
   }
 
   onAddJourneyImageSubmit() {

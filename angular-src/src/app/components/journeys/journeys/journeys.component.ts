@@ -18,7 +18,7 @@ export class JourneysComponent implements OnInit {
   option = true;
   nCnt: number = 0;
 
-  itemsPerPage: any = 8;
+  itemsPerPage: any = 6;
 
   constructor(
   	private journeysService: JourneysService

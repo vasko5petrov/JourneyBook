@@ -22,7 +22,7 @@
             <img *ngIf="oldImage.substr(0, 4) == 'http'" class="img-responsive" src="{{oldImage}}">
           </div>
       </div>
-			<a *ngIf="newJourney" [routerLink]="['/journeys/'+journeyId]" class="btn btn-link pull-right">Skip</a> <input type="submit" value="Add Image" class="btn btn-primary pull-right">
+			<a [routerLink]="['/journeys/'+journeyId]" class="btn btn-link pull-right"><span *ngIf="newJourney">Skip</span><span *ngIf="!newJourney">Go back</span></a> <input type="submit" value="Add Image" class="btn btn-primary pull-right">
 		</form>
 	</div>
 </div>
