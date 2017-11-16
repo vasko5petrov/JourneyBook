@@ -69,7 +69,7 @@ router.post('/add', passport.authenticate('jwt', {session:false}), (req, res) =>
 				if(err) {
 					res.json({success: false, message: [{'message': err.message}]});
 				} else {
-					res.json({success: true, message: `Journey "${newJourney.title}" created!`});
+					res.json({success: true, message: `Journey "${journey.title}" created!`, id: journey._id});
 					// console.log('Journey added!');
 					// res.redirect('/');
 				}

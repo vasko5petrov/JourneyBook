@@ -35,7 +35,10 @@
 	  <div class="col-sm-6 col-md-4" *ngFor="let journey of journeys | paginate: { itemsPerPage: itemsPerPage, currentPage: p } | orderBy:order:option date ">
 	  	<div class="panel">
 			<a [routerLink]="[journey._id]">
-				<div class="panel-heading" [style.background-image]="'url(http://localhost:3000/uploads/' + journey.imageUrl + ')'">
+				<div *ngIf="journey.imageUrl.substr(0, 4) != 'http'" class="panel-heading" [style.background-image]="'url(http://localhost:3000/uploads/' + journey.imageUrl + ')'">
+			    <!--<img src="{{journey.imageUrl}}"/>-->
+				</div>
+				<div *ngIf="journey.imageUrl.substr(0, 4) == 'http'" class="panel-heading" [style.background-image]="'url(' + journey.imageUrl + ')'">
 			    <!--<img src="{{journey.imageUrl}}"/>-->
 				</div>
 			</a>

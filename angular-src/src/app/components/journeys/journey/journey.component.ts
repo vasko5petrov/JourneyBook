@@ -11,7 +11,6 @@ import { DialogService } from "ng2-bootstrap-modal";
   styleUrls: ['./journey.component.css']
 })
 export class JourneyComponent implements OnInit {
-	title: string = 'My first AGM project';
   lat: number = 51.678418;
   lng: number = 7.809007;
 
@@ -28,7 +27,7 @@ export class JourneyComponent implements OnInit {
   	private journeysService: JourneysService,
     private flashMessage: FlashMessagesService,
     private dialogService: DialogService
-  	) { }
+  ) {}
 
   ngOnInit() {
     this.maxRating = 5;

@@ -11,6 +11,7 @@ import { JourneysComponent } from './components/journeys/journeys/journeys.compo
 import { AddJourneyComponent } from './components/journeys/add-journey/add-journey.component';
 import { EditJourneyComponent } from './components/journeys/edit-journey/edit-journey.component';
 import { JourneyComponent } from './components/journeys/journey/journey.component';
+import { JourneyImageComponent } from './components/journeys/journey-image/journey-image.component';
 import { JourneysMapComponent } from './components/journeys-map/journeys-map.component';
 
 import { ConfirmComponent } from './components/modal/confirm-modal.component';
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
 	{path: 'add-journey', component: AddJourneyComponent, canActivate: [AuthGuard]},
 	{path: 'edit-journey/:id', component: EditJourneyComponent, canActivate: [AuthGuard]},
   {path: 'journeys/:id', component: JourneyComponent, canActivate: [AuthGuard]},
+  {path: 'edit-journey/:id/image', component: JourneyImageComponent, canActivate: [AuthGuard]},
 	{path: 'users/register', component: RegisterComponent, canActivate: [AuthGuard]},
 	{path: 'users/login', component: LoginComponent, canActivate: [AuthGuard]},
 	{path: '*', redirectTo: ''}
@@ -101,7 +103,8 @@ export class OrderBy{
 		JourneysMapComponent,
 		LoaderComponent,
 		RegisterComponent,
-		LoginComponent
+		LoginComponent,
+		JourneyImageComponent
   ],
   imports: [
     BrowserModule,

@@ -10,7 +10,8 @@
         [iconUrl]="setMarkerIcon(m)">
           <agm-info-window class="infoWindow" #infoWindow>
             <div class="m-thumbnail">
-              <img src="http://localhost:3000/uploads/{{m.imageUrl}}" class="img-responsive" width="200px;">
+              <img *ngIf="m.imageUrl.substr(0, 4) != 'http'" src="http://localhost:3000/uploads/{{m.imageUrl}}" class="img-responsive" width="200px;">
+              <img *ngIf="m.imageUrl.substr(0, 4) == 'http'" src="{{m.imageUrl}}" class="img-responsive" width="200px;">
             </div>
             <a [routerLink]="['/journeys/'+m._id]"><strong>{{m.title}}</strong></a><br>
             <p>{{m.location.place}}</p>
