@@ -1,0 +1,29 @@
+<div *ngIf="journey" class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<h2 class="page-header"><span *ngIf="newJourney">Add</span><span *ngIf="!newJourney">Change</span> Image for "{{journey.title}}"</h2>
+		<form (submit)="onAddJourneyImageSubmit()" (keydown.enter)="$event.preventDefault()" class="form-wrap">
+      <input style="display: none;" [(ngModel)]="location" autocorrect="off" autocapitalize="off" spellcheck="off" #search type="text" name="location" class="form-control" id="location">
+      <div class="form-group">
+          <label for="imageFile">Image</label>
+          <br>
+          <input type="file" [(ngModel)]="imageFile" name="imageFile" id="imageFile" class="inputfile" (change)="onChangeImageFile($event)"/>
+          <label for="imageFile" class="btn btn-warning"><i class="fa fa-image"></i> <strong>Choose image</strong></label>
+          <button *ngIf="!imgReader && oldImage && oldImage != 'defaultImage.png'" type="button" class="btn btn-danger" (click)="removeCurrentImage()">Remove image</button>
+          <button *ngIf="this.photosUrls.length != 0" type="button" class="btn btn-success pull-right" (click)="imageFromLocation()">Random image from this location</button>
+      </div>
+      <div [hidden]="!imgReader">
+          <div *ngIf="imgReader" class="img-wrapper">
+            <img class="img-responsive" src="{{imgReader}}">
+          </div>
+      </div>
+      <div [hidden]="!oldImage">
+          <div *ngIf="!imgReader" class="img-wrapper">
+            <img *ngIf="oldImage == 'defaultImage.png'" class="img-responsive" src="http://localhost:3000/uploads/{{oldImage}}">
+            <img *ngIf="oldImage != 'defaultImage.png' && oldImage.substr(0, 4) != 'http'" class="img-responsive" src="http://localhost:3000/api/images/{{oldImage}}">
+            <img *ngIf="oldImage.substr(0, 4) == 'http'" class="img-responsive" src="{{oldImage}}">
+          </div>
+      </div>
+			<a [routerLink]="['/journeys/'+journeyId]" class="btn btn-link pull-right"><span *ngIf="newJourney">Skip</span><span *ngIf="!newJourney">Go back</span></a> <input type="submit" value="Add Image" class="btn btn-primary pull-right">
+		</form>
+	</div>
+</div>

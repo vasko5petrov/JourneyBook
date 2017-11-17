@@ -37,7 +37,7 @@ export class AuthGuard implements CanActivate{
       this.route = path.url[0].path;
     }
 
-    if(this.authService.loggedIn() && this.route == 'journeys' || this.authService.loggedIn() && this.route == 'journeys/map' || this.authService.loggedIn() && this.route == 'add-journey' || this.authService.loggedIn() && this.route == 'edit-journey/'+path.url[1].path  || this.authService.loggedIn() && this.route == 'journeys/' +path.url[1].path) {
+    if(this.authService.loggedIn() && this.route == 'journeys' || this.authService.loggedIn() && this.route == 'journeys/map' || this.authService.loggedIn() && this.route == 'add-journey' || this.authService.loggedIn() && this.route == 'edit-journey/'+path.url[1].path  || this.authService.loggedIn() && this.route == 'journeys/' +path.url[1].path || this.authService.loggedIn() && this.route == 'edit-journey/'+path.url[1].path+'/image') {
       return true;
     } else if(!this.authService.loggedIn() && this.route == 'users/login' || !this.authService.loggedIn() && this.route == 'users/register') {
       return true;

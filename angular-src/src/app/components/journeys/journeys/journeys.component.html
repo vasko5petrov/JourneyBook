@@ -38,7 +38,10 @@
 				<div *ngIf="journey.imageUrl === 'defaultImage.png'" class="panel-heading" [style.background-image]="'url(http://localhost:3000/uploads/' + journey.imageUrl + ')'">
 			    <!--<img src="{{journey.imageUrl}}"/>-->
 				</div>
-				<div *ngIf="journey.imageUrl != 'defaultImage.png'" class="panel-heading" [style.background-image]="'url(http://localhost:3000/api/images/' + journey.imageUrl + ')'">
+				<div *ngIf="journey.imageUrl != 'defaultImage.png' && journey.imageUrl.substr(0, 4) != 'http'" class="panel-heading" [style.background-image]="'url(http://localhost:3000/api/images/' + journey.imageUrl + ')'">
+			    <!--<img src="{{journey.imageUrl}}"/>-->
+				</div>
+				<div *ngIf="journey.imageUrl.substr(0, 4) == 'http'" class="panel-heading" [style.background-image]="'url(' + journey.imageUrl + ')'">
 			    <!--<img src="{{journey.imageUrl}}"/>-->
 				</div>
 			</a>

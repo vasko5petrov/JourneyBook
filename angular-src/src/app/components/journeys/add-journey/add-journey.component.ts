@@ -38,8 +38,8 @@ export class AddJourneyComponent implements OnInit {
 	duration: any;
   type: any;
   rating: any;
-	image: any;
-  imgReader: string;
+	// image: any;
+  // imgReader: string;
 
   messageTimeout: number = 3000;
 
@@ -129,27 +129,27 @@ export class AddJourneyComponent implements OnInit {
     }
   }
 
-  removeImageFile() {
-    this.image = null;
-    this.imgReader = null;
-  }
-
-  onChangeImageFile(event) {
-  	let image = event.srcElement.files[0];
-  	this.image = image;
-    let reader = new FileReader();
-    reader.onload = () => {
-      this.imgReader = reader.result;
-    }
-
-    if(this.image && this.image.type == 'image/jpeg') {
-      reader.readAsDataURL(this.image);
-    } else {
-      this.flashMessage.show('This file will not be uploaded! Please select an image file!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
-      this.image = null;
-      this.imgReader = null;
-    }
-  }
+  // removeImageFile() {
+  //   this.image = null;
+  //   this.imgReader = null;
+  // }
+  //
+  // onChangeImageFile(event) {
+  // 	let image = event.srcElement.files[0];
+  // 	this.image = image;
+  //   let reader = new FileReader();
+  //   reader.onload = () => {
+  //     this.imgReader = reader.result;
+  //   }
+  //
+  //   if(this.image && this.image.type == 'image/jpeg') {
+  //     reader.readAsDataURL(this.image);
+  //   } else {
+  //     this.flashMessage.show('This file will not be uploaded! Please select an image file!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
+  //     this.image = null;
+  //     this.imgReader = null;
+  //   }
+  // }
 
   onAddJourneySubmit() {
     if(this.type == "" || this.type == undefined) {
@@ -167,42 +167,42 @@ export class AddJourneyComponent implements OnInit {
       rating: this.rating
     }
 
-  	if(this.image) {
-  		this.journeysService.uploadImage(this.image).subscribe(res => {
-  			if(res.success) {
-  				journey['imageUrl'] = res.file;
-
-			    this.journeysService.addJourney(journey).subscribe(data => {
-			      if(data.success) {
-			      	this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
-			        this.router.navigate(['/journeys']);
-			      } else {
-			      	for(let i=0; i<data.message.length; i++) {
-				  			this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
-				  		}
-			      }
-			    });
-  			} else {
-			  	if(!this.validateService.validateImage(res)) {
-			  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
-			  		return false;
-			  	}
-  			}
-  		});
-  	} else {
+  	// if(this.image) {
+  	// 	this.journeysService.uploadImage(this.image).subscribe(res => {
+  	// 		if(res.success) {
+  	// 			journey['imageUrl'] = res.file;
+    //
+		// 	    this.journeysService.addJourney(journey).subscribe(data => {
+		// 	      if(data.success) {
+		// 	      	this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
+		// 	        this.router.navigate(['/journeys']);
+		// 	      } else {
+		// 	      	for(let i=0; i<data.message.length; i++) {
+		// 		  			this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
+		// 		  		}
+		// 	      }
+		// 	    });
+  	// 		} else {
+		// 	  	if(!this.validateService.validateImage(res)) {
+		// 	  		this.flashMessage.show('File size too big!', {cssClass: 'alert-danger', timeout: this.messageTimeout});
+		// 	  		return false;
+		// 	  	}
+  	// 		}
+  	// 	});
+  	// } else {
 	  	journey['imageUrl'] = 'defaultImage.png';
 
       this.journeysService.addJourney(journey).subscribe(data => {
         if(data.success) {
           this.flashMessage.show(data.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
-          this.router.navigate(['/journeys']);
+          this.router.navigate(['/edit-journey/'+data.id+'/image']);
         } else {
           for(let i=0; i<data.message.length; i++) {
             this.flashMessage.show(data.message[i].message, {cssClass: 'alert-danger', timeout: this.messageTimeout});
           }
         }
       });
-    }
+    // }
   }
 
 }

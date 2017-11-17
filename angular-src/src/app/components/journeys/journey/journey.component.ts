@@ -11,7 +11,6 @@ import { DialogService } from "ng2-bootstrap-modal";
   styleUrls: ['./journey.component.css']
 })
 export class JourneyComponent implements OnInit {
-	title: string = 'My first AGM project';
   lat: number = 51.678418;
   lng: number = 7.809007;
 
@@ -89,7 +88,7 @@ export class JourneyComponent implements OnInit {
           this.journeysService.deleteJourney(this.journeyId).subscribe(res => {
             if(res.success) {
               if(typeof(this.journey.imageUrl) != 'undefined') {
-                if(this.journey.imageUrl != 'defaultImage.png') {
+                if(this.journey.imageUrl != 'defaultImage.png' && this.journey.imageUrl.substr(0, 4) != 'http') {
                   this.journeysService.deleteImage(this.journey.imageUrl).subscribe(res => {
                     if(res.success) {
                       this.flashMessage.show(res.message, {cssClass: 'alert-success', timeout: this.messageTimeout});
