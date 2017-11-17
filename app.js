@@ -101,8 +101,11 @@ let journeys = require('./routes/journeys');
 app.use('/api/journeys', journeys);
 let users = require('./routes/users');
 app.use('/api/users', users);
+app.get('*', (req, res) => {
+	res.sendFile(__dirname+'/public/index.html');
+});
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Start server
 app.listen(PORT, () => {

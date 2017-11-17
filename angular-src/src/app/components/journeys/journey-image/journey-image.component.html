@@ -18,8 +18,8 @@
       </div>
       <div [hidden]="!oldImage">
           <div *ngIf="!imgReader" class="img-wrapper">
-            <img *ngIf="oldImage == 'defaultImage.png'" class="img-responsive" src="http://localhost:3000/uploads/{{oldImage}}">
-            <img *ngIf="oldImage != 'defaultImage.png' && oldImage.substr(0, 4) != 'http'" class="img-responsive" src="http://localhost:3000/api/images/{{oldImage}}">
+            <img *ngIf="oldImage == 'defaultImage.png'" class="img-responsive" src="uploads/{{oldImage}}">
+            <img *ngIf="oldImage != 'defaultImage.png' && oldImage.substr(0, 4) != 'http'" class="img-responsive" src="api/images/{{oldImage}}">
             <img *ngIf="oldImage.substr(0, 4) == 'http'" class="img-responsive" src="{{oldImage}}">
           </div>
       </div>

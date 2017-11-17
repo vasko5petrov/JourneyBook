@@ -35,10 +35,10 @@
 	  <div class="col-sm-6 col-md-4" *ngFor="let journey of journeys | paginate: { itemsPerPage: itemsPerPage, currentPage: p } | orderBy:order:option date ">
 	  	<div class="panel">
 			<a [routerLink]="[journey._id]">
-				<div *ngIf="journey.imageUrl === 'defaultImage.png'" class="panel-heading" [style.background-image]="'url(http://localhost:3000/uploads/' + journey.imageUrl + ')'">
+				<div *ngIf="journey.imageUrl === 'defaultImage.png'" class="panel-heading" [style.background-image]="'url(uploads/' + journey.imageUrl + ')'">
 			    <!--<img src="{{journey.imageUrl}}"/>-->
 				</div>
-				<div *ngIf="journey.imageUrl != 'defaultImage.png' && journey.imageUrl.substr(0, 4) != 'http'" class="panel-heading" [style.background-image]="'url(http://localhost:3000/api/images/' + journey.imageUrl + ')'">
+				<div *ngIf="journey.imageUrl != 'defaultImage.png' && journey.imageUrl.substr(0, 4) != 'http'" class="panel-heading" [style.background-image]="'url(api/images/' + journey.imageUrl + ')'">
 			    <!--<img src="{{journey.imageUrl}}"/>-->
 				</div>
 				<div *ngIf="journey.imageUrl.substr(0, 4) == 'http'" class="panel-heading" [style.background-image]="'url(' + journey.imageUrl + ')'">
@@ -75,7 +75,7 @@
 			</div>
 		</div>
 	    <!-- <div class="thumbnail">
-	      <img src="http://localhost:3000/{{journey.imageUrl}}">
+	      <img src="{{journey.imageUrl}}">
 	      <div class="caption">
 	        <h3>{{journey.title}}</h3>
 	        <p>{{journey.datetime}}</p>

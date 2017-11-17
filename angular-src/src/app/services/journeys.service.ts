@@ -18,7 +18,7 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/api/journeys', {headers: headers})
+    return this.http.get('api/journeys', {headers: headers})
       .map(res => res.json());
   }
 
@@ -27,7 +27,7 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/api/journeys/search/' + query, {headers: headers})
+    return this.http.get('api/journeys/search/' + query, {headers: headers})
       .map(res => res.json());
   }
 
@@ -36,7 +36,7 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/api/journeys/add', journey, {headers: headers})
+    return this.http.post('api/journeys/add', journey, {headers: headers})
       .map(res => res.json());
   }
 
@@ -45,14 +45,14 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.post('http://localhost:3000/api/journeys/'+journey.id+'/edit', journey, {headers: headers})
+    return this.http.post('api/journeys/'+journey.id+'/edit', journey, {headers: headers})
       .map(res => res.json());
   }
 
   uploadImage(image) {
   	// let input = new FormData();
   	// input.append('imageFile', image);
-  	// return this.http.post("http://localhost:3000/images/upload", image);
+  	// return this.http.post("images/upload", image);
   	let headers = new Headers();
     this.loadToken();
     headers.append('Authorization', this.authToken);
@@ -60,7 +60,7 @@ export class JourneysService {
     let options = new RequestOptions({ headers: headers });
 		let formData: FormData = new FormData();
     formData.append('imageFile', image);
-    return this.http.post('http://localhost:3000/api/images/upload', formData, options)
+    return this.http.post('api/images/upload', formData, options)
         .map(res => res.json());
   }
 
@@ -69,7 +69,7 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.delete('http://localhost:3000/api/images/delete/'+imageName, {headers: headers})
+    return this.http.delete('api/images/delete/'+imageName, {headers: headers})
       .map(res => res.json());
   }
 
@@ -78,7 +78,7 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.get('http://localhost:3000/api/journeys/'+id, {headers: headers})
+    return this.http.get('api/journeys/'+id, {headers: headers})
       .map(res => res.json());
   }
 
@@ -87,7 +87,7 @@ export class JourneysService {
     this.loadToken();
     headers.append('Authorization', this.authToken);
     headers.append('Content-Type', 'application/json');
-    return this.http.delete('http://localhost:3000/api/journeys/delete/'+id, {headers: headers})
+    return this.http.delete('api/journeys/delete/'+id, {headers: headers})
       .map(res => res.json());
   }
 }

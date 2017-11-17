@@ -47,15 +47,15 @@ export class JourneysMapComponent implements OnInit {
 
   setMarkerIcon(m) {
     if (m.type === "Mountain") {
-      return "http://localhost:3000/images/mountain_pin.png"
+      return "images/mountain_pin.png"
     } else if(m.type === "Monuments") {
-      return "http://localhost:3000/images/monuments_pin.png"
+      return "images/monuments_pin.png"
     } else if(m.type === "Sea") {
-      return "http://localhost:3000/images/sea_pin.png"
+      return "images/sea_pin.png"
     } else if(m.type === "Spa") {
-      return "http://localhost:3000/images/spa_pin.png"
+      return "images/spa_pin.png"
     } else {
-      return "http://localhost:3000/images/pin.png"
+      return "images/pin.png"
     }
   }
 
